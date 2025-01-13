@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dwelling-Cost Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-navbar .nav-item .nav-link {
+            color: #292929; 
+            font-size: 16px;
+        }
+    
+        .no-wrap {
+                white-space: nowrap;
+            }
+        
+
+        .custom-navbar .nav-item .nav-link:hover {
+            color: #E02B2B; 
+        }
+
+        .custom-navbar .nav-item.custom-navlink {
+            transition: color 0.3s ease;
+        }
+        .custom-navbar .nav-item .nav-link.active {
+            color: #E02B2B; /* Color when active */
+        }
+
+        .expense-hero h1{
+            font-weight: 700;
+            font-size: 50px;
+          color: #292929!important
+
+        }
+        .expense-hero{
+            padding-right: 140px;
+        }
+        .expense-hero p{
+           font-size: 1.8rem ;
+        }
+        .navbar-brand img{
+            height: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .expense-hero h1 {
+                font-weight: 700;
+                font-size: 39px;
+                color: #292929 !important;
+            }
+            .expense-hero p{
+           font-size: 1.3rem ;
+        }
+        }
+        @media (max-width: 550px) {
+            .expense-hero h1 {
+                font-weight: 700;
+                font-size: 30px;
+                color: #292929 !important;
+            }
+            .navbar-brand img{
+                width: 180px;
+                height: auto;
+            }
+            .expense-hero p{
+           font-size: 1rem ;
+        }
+            .expense-hero{
+            padding-right: 70px;
+        }
+        .advertise-btn a img{
+            width: 100px;
+        }
+        }
+        @media (max-width: 350px) {
+            .expense-hero h1 {
+                font-weight: 700;
+                font-size: 25px;
+                color: #292929 !important;
+            }
+            .expense-hero{
+            padding-right: 15px;
+        }
+        }
+
+
+        .howit-works h1{
+           
+            font-weight: 700;
+            font-size: 40px;
+          color: #292929!important
+        }
+        
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a class="navbar-brand" href="{% url 'expenses' %}">
+                <img src="https://kharcha.pk/wp-content/uploads/2022/05/Frame-56.png" alt="Logo" >
+            </a>
+    
+            <!-- Toggler button for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navbar items -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav custom-navbar ms-auto px-2">
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link" href="{% url 'budget' %}">Budget</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link" href="{% url 'expenses' %}">Expenses</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link" href="{% url 'reports' %}">Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Saved Budgets</h2>
+
+        {% if budgets %}
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Category</th>
+                    <th>Budget Amount</th>
+                    <th>Description</th>
+                    <th>Month</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for budget in budgets %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ budget.get_category_display }}</td>
+                    <td>${{ budget.budget_amount }}</td>
+                    <td>{{ budget.description|default:"N/A" }}</td>
+                    <td>{{ budget.month|date:"F Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-center text-muted">No budgets saved yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Add Your Expenses</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Budget Amount -->
+            <div class="mb-3">
+                <label for="budgetAmount" class="form-label">Budget Amount</label>
+                <input type="number" class="form-control" id="budgetAmount" name="budgetAmount" placeholder="Enter your budget amount" required>
+            </div>
+            
+            <!-- Category -->
+            <div class="mb-3">
+                <label for="budgetCategory" class="form-label">Category</label>
+                <select class="form-select" id="budgetCategory" name="budgetCategory" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="rent">Rent</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="savings">Savings</option>
+                </select>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="budgetDescription" class="form-label">Description (Optional)</label>
+                <textarea class="form-control" id="budgetDescription" name="budgetDescription" rows="3" placeholder="Add a description (e.g., details about this budget)"></textarea>
+            </div>
+    
+            <!-- Date -->
+            <div class="mb-3">
+                <label for="budgetDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="budgetDate" name="budgetDate" required>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Set Budget</button>
+            </div>
+        </form>
+    </div>
+    
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

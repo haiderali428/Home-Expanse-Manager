@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home_Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:wght@453&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family: "Open Sans", serif;
+            background-color: #F5F5F5;
+        }
+
+        .custom-navbar .nav-item .nav-link {
+            color: #292929; 
+            font-size: 16px;
+        }
+
+        .custom-navbar .nav-item .nav-link:hover {
+            color: #E02B2B; 
+        }
+
+        .custom-navbar .nav-item.custom-navlink {
+            transition: color 0.3s ease;
+        }
+        .custom-navbar .nav-item .nav-link.active {
+            color: #E02B2B; /* Color when active */
+        }
+
+        .expense-hero h1{
+            font-weight: 700;
+            font-size: 50px;
+          color: #292929!important
+
+        }
+        .expense-hero{
+            padding-right: 140px;
+        }
+        .expense-hero p{
+           font-size: 1.8rem ;
+        }
+        .navbar-brand img{
+            height: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .expense-hero h1 {
+                font-weight: 700;
+                font-size: 39px;
+                color: #292929 !important;
+            }
+            .expense-hero p{
+           font-size: 1.3rem ;
+        }
+        }
+        @media (max-width: 550px) {
+            .expense-hero h1 {
+                font-weight: 700;
+                font-size: 30px;
+                color: #292929 !important;
+            }
+            .navbar-brand img{
+            height: 30px;
+        }
+            .expense-hero p{
+           font-size: 1rem ;
+        }
+            .expense-hero{
+            padding-right: 70px;
+        }
+        .advertise-btn a img{
+            width: 100px !important;
+        }
+        }
+        @media (max-width: 350px) {
+            .expense-hero h1 {
+                font-weight: 700;
+                font-size: 25px;
+                color: #292929 !important;
+            }
+            .expense-hero{
+            padding-right: 15px;
+        }
+        }
+
+
+        .howit-works h1{
+           
+            font-weight: 700;
+            font-size: 40px;
+          color: #292929!important
+        }
+
+        .howcard-content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+           
+            margin-top: 10px;
+
+            
+        }
+        .howcard-content h3{
+            font-weight: 700;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .howcard-content p{
+            font-weight: 700;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+        .how-card{
+            padding: 5px 30px;
+        }
+        .scond-paragraph{
+            font-size: 20px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a class="navbar-brand" href="{% url 'expenses' %}">
+                <img src="https://kharcha.pk/wp-content/uploads/2022/05/Frame-56.png" alt="Logo" >
+            </a>
+    
+            <!-- Toggler button for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navbar items -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav custom-navbar ms-auto px-2">
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link" href="{% url 'budget' %}">Budget</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link" href="{% url 'expenses' %}">Expenses</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a class="nav-link" href="{% url 'reports' %}">Report</a>
+                    </li>
+                    <li class="nav-item custom-navlink mx-2">
+                        <a href="{% url 'logout' %}" class="btn btn-dark">Logout</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<section class="container "> 
+    <div class="row mt-4">
+     <div class="col-lg-7  d-flex flex-column gap-1 expense-hero" >
+        <h1 >Manage Your Budget Easily And <span style="text-decoration: underline; text-decoration-color: #FFAB49;">Save Money</span></h1>
+        <p style="font-weight: 400;">#1 expense tracker app for you to manage your income and expenses</p>
+        <div class="advertise-btn d-flex flex-wrap gap-2">
+           <a href=""> <img src="https://kharcha.pk/wp-content/uploads/2022/05/google-play-store.png" alt=""></a>
+           <a href=""> <img src="https://kharcha.pk/wp-content/uploads/2022/05/apple-store.png" alt=""></a>
+        </div>
+     </div>
+     <div class="col-lg-5 mt-3 mt-lg-0">
+        <img src="https://thumbs.dreamstime.com/b/monthly-expenses-template-vector-illustration-can-be-used-workflow-layout-banner-diagram-number-options-web-design-55495282.jpg" class="w-100 " style="height: 350px; border-radius: 10px;" alt="">
+     </div>    
+    </div>
+</section>
+
+<section class="container howit-works"> 
+    <h1 class="mt-sm-5 mt-5 mb-sm-5 mb-3 text-center">How It Works</h1>
+    <div class="row ">
+     <div class="col-md-4 col-sm-6 " >
+        <div class="how-card">
+            <div class="howcard-img px-sm-5 px-1"><img src="https://kharcha.pk/wp-content/uploads/2022/05/step1.webp" alt="" class="w-100 "></div>
+            <div class="howcard-content">
+                <h3>1. Create a KharchaBook</h3>
+                <p style="font-weight: 400;">Just give your book a name and start right away</p>
+            </div>
+        </div>
+       
+     </div>
+     <div class="col-md-4 col-sm-6">
+        <div class="how-card">
+            <div class="howcard-img px-sm-5 px-1"><img src="https://kharcha.pk/wp-content/uploads/2022/05/step2.webp" alt="" class="w-100 "></div>
+            <div class="howcard-content">
+                <h3>2. Invite Friends or family</h3>
+                <p style="font-weight: 400;">Send them the KharchaBook link and they will be able to join instantly!</p>
+            </div>
+        </div>
+     </div>   
+     <div class="col-md-4 col-sm-6">
+        <div class="how-card">
+            <div class="howcard-img px-sm-5 px-1 "><img src="https://kharcha.pk/wp-content/uploads/2022/05/step3.webp" alt="" class="w-100 "></div>
+            <div class="howcard-content">
+                <h3>3. Track Finances Together</h3>
+                <p style="font-weight: 400;">Multiple members in a book can add entries simultaneously.</p>
+            </div>
+        </div>
+     </div>    
+    </div>
+</section>
+
+<section class="container ">
+  <div class="row mt-sm-5 mt-3 d-flex align-items-center" >
+    <div class="col-lg-6 px-sm-5 px-1">
+        <h2 class="text-center fs-sm-3 fs-4 px-1">Create Multiple KharchaBooks</h2>
+        <p class="text-center scond-paragraph" style="font-weight: 400">Dedicate separate spaces for different accounts. Keep one for home, one for business, one for personal etc.</p>
+    </div>
+    <div class="col-lg-6 px-4 mt-sm-5 mt-3">
+        <img src="https://kharcha.pk/wp-content/uploads/2022/05/Feature1.webp" class="w-100" alt="">
+    </div>
+  </div>
+</section>
+
+<section class="container ">
+    <div class="row mt-sm-5 mt-3 d-flex align-items-center" >
+        <div class="col-lg-6 px-4 mt-sm-5 mt-3">
+            <img src="https://kharcha.pk/wp-content/uploads/2022/05/Feature2.webp" class="w-100" alt="">
+        </div>
+      <div class="col-lg-6 px-sm-5 px-1">
+          <h2 class="text-center fs-sm-3 fs-4 px-1">Track Your Spendings</h2>
+          <p class="text-center scond-paragraph" style="font-weight: 400">Make a habit of adding your entries daily and learn to control your expenses.</p>
+      </div>
+     
+    </div>
+  </section>
+  <section class="container ">
+    <div class="row mt-sm-5 mt-3 d-flex align-items-center" >
+      <div class="col-lg-6 px-sm-5 px-1">
+          <h2 class="text-center fs-sm-3 fs-4 px-1">Add Others in your Book</h2>
+          <p class="text-center scond-paragraph" style="font-weight: 400">Track your finances with multiple users and see who spent on what. Invite your spouse, roommates, families or business partners to your KharchaBook!</p>
+      </div>
+      <div class="col-lg-6 px-4 mt-sm-5 mt-3">
+          <img src="https://kharcha.pk/wp-content/uploads/2022/05/Feature3.webp" class="w-100" alt="">
+      </div>
+    </div>
+  </section>
+  
+  <section class="container ">
+      <div class="row mt-sm-5 mt-3 d-flex align-items-center" >
+          <div class="col-lg-6 px-4 mt-sm-5 mt-3">
+              <img src="https://kharcha.pk/wp-content/uploads/2022/05/Feature4.webp" class="w-100" alt="">
+          </div>
+        <div class="col-lg-6 px-sm-5">
+            <h2 class="text-center fs-sm-3 fs-5 px-1">Analyse Income and Expenses</h2>
+            <p class="text-center scond-paragraph" style="font-weight: 400">Ckeck the Overview section to understand where your money is going</p>
+        </div>
+       
+      </div>
+    </section>
+
+    <footer class="container-fluid bg-dark ">
+        <div class="d-flex container justify-content-between align-items-center ">
+            <p class="text-white mt-3">© KharchaBook 2022, All Rights Reserved</p>
+            <ul class="footer-icons d-flex gap-4 mt-3">
+              <li> <a href=""><i class="fab fa-facebook fs-4 text-white"></i></a> </li>
+              <li> <a href=""> <i class="fab fa-instagram fs-4 text-white"></i></a> </li>
+            </ul>
+        </div>
+
+    </footer>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
