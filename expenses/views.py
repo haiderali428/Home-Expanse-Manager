@@ -46,21 +46,10 @@ def index(request):
 
 # Expenses View
 def expenses(request):
-    if request.method == 'POST':
-        try:
-            Expense.objects.create(
-                category=request.POST.get('budgetCategory'),
-                description=request.POST.get('budgetDescription'),
-                amount=request.POST.get('budgetAmount'),
-                date=request.POST.get('budgetDate'),
-            )
-            messages.success(request, "Expense has been added successfully.")
-        except Exception as e:
-            messages.error(request, f"Error adding expense: {str(e)}")
-        return redirect('expenses')
-
-    expenses_list = Expense.objects.all()
-    return render(request, 'expenses.html', {'expenses': expenses_list})
+    
+    budgets = Budget.objects.all()
+    
+    return render(request, 'expenses.html', {'budgets': budgets})
 
 # Reports View
 def reports(request):
