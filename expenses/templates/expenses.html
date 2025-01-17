@@ -292,7 +292,7 @@
                 <td>{{ forloop.counter }}</td>
                 <td>{{ budget.get_category_display }}</td>
                 <td>${{ budget.budget_amount }}</td>
-                <td>{{ budget.budget_description|default:"N/A" }}</td>
+                <td>{{ budget.description|default:"N/A" }}</td>
                 <td>{{ budget.month|date:"F Y" }}</td>
             </tr>
             {% endfor %}
@@ -306,8 +306,9 @@
 
     <div class="container1 mt-5">
         <h2 class="text-center mb-4">Add Your Expenses</h2>
-        <form method="POST">
-            {% csrf_token %}
+        <form method="POST" action="{% url 'expense_submission' %}">
+        {% csrf_token %} {{ form.as_p }}
+         <input type="hidden" name="budgetAmount" value="{{ form.budget_amount }}">
             <!-- Budget Amount -->
             <div class="mb-3">
                 <label for="budgetAmount" class="form-label">Budget Amount</label>

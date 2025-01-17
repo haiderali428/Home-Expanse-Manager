@@ -9,6 +9,8 @@ from .middlewares import auth
 from django.http import HttpResponse
 from .forms import BudgetForm
 from .models import Budget
+from .forms import ExpenseForm
+
 
 
 # Views
@@ -105,3 +107,35 @@ def budget_submission(request):
     budgets = Budget.objects.all()
     
     return render(request, 'expenses.html', {'budgets': budgets})
+def expense_submission(request):
+    budgets = Budget.objects.all()  # Fetch all budgets to pass them to the template
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST)
+        if form.is_valid():
+            # Save the expense
+            expense = form.save()
+
+            # Debug: Print the selected category from the form
+            print("Selected category:", expense.category)
+
+            # Find the corresponding budget(s) and deduct the expense amount
+            budgets_for_category = Budget.objects.filter(category=expense.category)
+
+            # Debug: Print the query result
+            print("Budgets for this category:", budgets_for_category)
+
+            if budgets_for_category.exists():
+                # Deduct from the first budget (or use another approach)
+                budget = budgets_for_category.first()
+                budget.budget_amount -= expense.amount
+                budget.save()
+            else:
+                return HttpResponse("Budget for this category does not exist.")
+
+            # Redirect or return to the page with updated budgets
+            return render(request, 'expenses.html', {'budgets': budgets})
+
+    else:
+        form = ExpenseForm()
+
+    return render(request, 'expenses.html', {'form': form, 'budgets': budgets})

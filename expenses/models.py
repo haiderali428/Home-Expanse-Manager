@@ -9,18 +9,13 @@ class Expense(models.Model):
         ('entertainment', 'Entertainment'),
         ('savings', 'Savings'),
     ]
-
+    
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    description = models.TextField(blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField(auto_now_add=True)
-
+    description = models.TextField(blank=True, null=True)
+    date = models.DateField()
     def __str__(self):
-        return f"{self.get_category_display()} - {self.amount} - {self.description} - {self.date}"
-
-    class Meta:
-        ordering = ['-date']
-
+        return f"{self.category} expense of {self.amount} on {self.date}"
 
 class MonthlyBudget(models.Model):
     CATEGORY_CHOICES = [
