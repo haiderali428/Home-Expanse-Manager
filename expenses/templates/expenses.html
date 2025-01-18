@@ -272,41 +272,43 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Saved Budgets</h2>
+   <div class="container mt-5">
+    <h2 class="text-center mb-4">Saved Budgets</h2>
 
-        {% if budgets %}
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Category</th>
-                    <th>Budget Amount</th>
-                    <th>Description</th>
-                    <th>Month</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for budget in budgets %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ budget.get_category_display }}</td>
-                    <td>${{ budget.budget_amount }}</td>
-                    <td>{{ budget.description|default:"N/A" }}</td>
-                    <td>{{ budget.month|date:"F Y" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p class="text-center text-muted">No budgets saved yet.</p>
-        {% endif %}
-    </div>
+    {% if budgets %}
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Budget Amount</th>
+                <th>Description</th>
+                <th>Month</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for budget in budgets %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ budget.get_category_display }}</td>
+                <td>${{ budget.budget_amount }}</td>
+                <td>{{ budget.description|default:"N/A" }}</td>
+                <td>{{ budget.month|date:"F Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center text-muted">No budgets saved yet.</p>
+    {% endif %}
+</div>
+
 
     <div class="container1 mt-5">
         <h2 class="text-center mb-4">Add Your Expenses</h2>
-        <form method="POST">
-            {% csrf_token %}
+        <form method="POST" action="{% url 'expense_submission' %}">
+        {% csrf_token %} {{ form.as_p }}
+         <input type="hidden" name="budgetAmount" value="{{ form.budget_amount }}">
             <!-- Budget Amount -->
             <div class="mb-3">
                 <label for="budgetAmount" class="form-label">Budget Amount</label>
